@@ -1,28 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { FormsModule} from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { RouterModule, Routes, } from '@angular/router'
 
-import { AppComponent } from './app.component';
-
-import { AuthenticationService } from './service/authentication-service.service';
-import { JwtUtilsService } from './service/jwt-utils.service';
-import { TokenInterceptorService } from './service/token-interceptor.service';
-import { CanActivateAuthGuard } from './service/can-activate-auth.guard';
+import { AppComponent } from './app.component'
+import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component'
+import { ItemsComponent } from './page/items/items.component'
+import { ComponentItemService } from './service/component-item.service'
+import { FormsModule } from '@angular/forms'
 
 const appRoutes: Routes = [
-
+  {path: 'components', component: ItemsComponent},
+  {path: '**', component: PageNotFoundComponent}
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
+    PageNotFoundComponent,
+    ItemsComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       {
@@ -31,14 +32,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    },
-    AuthenticationService,
-    CanActivateAuthGuard,
-    JwtUtilsService
+    ComponentItemService,
   ],
   bootstrap: [AppComponent]
 })
