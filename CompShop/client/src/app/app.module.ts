@@ -7,10 +7,15 @@ import { AppComponent } from './app.component'
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component'
 import { ItemsComponent } from './page/items/items.component'
 import { ComponentItemService } from './service/component-item.service'
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component'
 
 const appRoutes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'components', component: ItemsComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ]
 
@@ -18,7 +23,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    ItemsComponent
+    ItemsComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
